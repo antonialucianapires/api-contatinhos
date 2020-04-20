@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping("/contacts")
 @Api(value="Contatinhos API REST")
 @CrossOrigin(origins="*")
 public class ContactController {
@@ -31,13 +31,13 @@ public class ContactController {
 			this.repository = contactRepository;
 		}
 		
-		@GetMapping("/contacts")
+		@GetMapping
 		@ApiOperation(value="Listar todos os contatos")
 		public List<Contact> findAll() {
 			return repository.findAll();
 		}
 		
-		@GetMapping("/contacts/{id}")
+		@GetMapping("/{id}")
 		@ApiOperation(value="Obter um contato específico pelo ID")
 		public ResponseEntity<Contact> findById(@PathVariable long id) {
 			return repository.findById(id)
@@ -51,7 +51,7 @@ public class ContactController {
 			return repository.save(contact);
 		}
 		
-		@PutMapping("/contact/{id}")
+		@PutMapping("/{id}")
 		@ApiOperation(value="Atualizar detalhes de um contato")
 		public ResponseEntity<Contact> update(@PathVariable("id") long id,
 										@RequestBody Contact contact) {
@@ -67,7 +67,7 @@ public class ContactController {
 			
 		}
 		
-		@DeleteMapping("/contact/{id}")
+		@DeleteMapping("/{id}")
 		@ApiOperation(value="Remover um contato pelo ID")
 		public ResponseEntity<?> delete(@PathVariable long id) {
 			return repository.findById(id)
