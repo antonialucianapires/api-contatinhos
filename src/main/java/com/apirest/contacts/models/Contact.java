@@ -7,10 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.sun.istack.NotNull;
 
@@ -22,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name="TB_CONTACT")
 public class Contact implements Serializable{
 
 		/**
@@ -30,15 +27,13 @@ public class Contact implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 		@Id
-		@GeneratedValue(generator= "increment")
-		@GenericGenerator(name="increment", strategy= "increment")
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		
-		@NotBlank
+		@NotNull
 		private String name;
 		
 		@NotNull
-		@Email
 		private String email;
 		
 		@NotNull
