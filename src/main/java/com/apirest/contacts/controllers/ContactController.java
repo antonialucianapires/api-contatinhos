@@ -45,13 +45,13 @@ public class ContactController {
 					.orElse(ResponseEntity.notFound().build());
 		}
 		
-		@PostMapping("/contacts/new")
+		@PostMapping("/contacts")
 		@ApiOperation(value="Criar um novo contato")
 		public Contact create(@RequestBody Contact contact) {
 			return repository.save(contact);
 		}
 		
-		@PutMapping("/contact/{id}")
+		@PutMapping("/contacts/{id}")
 		@ApiOperation(value="Atualizar detalhes de um contato")
 		public ResponseEntity<Contact> update(@PathVariable("id") long id,
 										@RequestBody Contact contact) {
@@ -67,7 +67,7 @@ public class ContactController {
 			
 		}
 		
-		@DeleteMapping("/contact/{id}")
+		@DeleteMapping("/contacts/{id}")
 		@ApiOperation(value="Remover um contato pelo ID")
 		public ResponseEntity<?> delete(@PathVariable long id) {
 			return repository.findById(id)
