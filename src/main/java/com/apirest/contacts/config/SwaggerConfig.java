@@ -10,7 +10,10 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.VendorExtension;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-
+import springfox.documentation.swagger.web.DocExpansion;
+import springfox.documentation.swagger.web.OperationsSorter;
+import springfox.documentation.swagger.web.UiConfiguration;
+import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -44,6 +47,16 @@ public class SwaggerConfig {
         );
 
         return apiInfo;
+    }
+    
+    @Bean
+    UiConfiguration uiConfig() {
+    return UiConfigurationBuilder.builder()
+    .operationsSorter(OperationsSorter.ALPHA)
+    .docExpansion(DocExpansion.LIST) // DocExpansion.LIST or DocExpansion.NONE or DocExpansion.FULL -> Exibe ou recolhe endpoints
+    .defaultModelsExpandDepth(-1) // Oculta Models
+    .build();
+
     }
 
 }
