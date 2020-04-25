@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
@@ -32,14 +33,14 @@ public class Contact implements Serializable{
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		
-		@NotNull
+		@NotBlank
 		@Size(max = 50)
 		private String name;
 		
-		@NotNull
+		@NotBlank
 		@Email(message = "O e-mail deve ser válido.")
 		private String email;
 		
-		@NotNull
+		@NotBlank
 		private String phone;
 }
