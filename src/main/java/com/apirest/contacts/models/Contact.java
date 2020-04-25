@@ -24,9 +24,6 @@ import lombok.NoArgsConstructor;
 @Table(name="TB_CONTACT")
 public class Contact implements Serializable{
 
-		/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 		@Id
