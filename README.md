@@ -7,5 +7,5 @@
 
 ### API Rest disponível
 
-- Teste com Swagger: http://localhost:8080/swagger-ui.html
+- Teste com Swagger: https://api-contatinho.herokuapp.com/swagger-ui.html
 - Visualize aqui: https://api-contatinho.herokuapp.com/api/contacts
