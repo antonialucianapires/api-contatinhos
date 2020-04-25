@@ -2,6 +2,8 @@ package com.apirest.contacts.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +49,7 @@ public class ContactController {
 		
 		@PostMapping("/contacts")
 		@ApiOperation(value="Criar um novo contato")
-		public Contact create(@RequestBody Contact contact) {
+		public Contact create(@Valid @RequestBody Contact contact) {
 			return repository.save(contact);
 		}
 		

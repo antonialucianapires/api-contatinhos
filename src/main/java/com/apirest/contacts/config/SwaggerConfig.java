@@ -53,8 +53,8 @@ public class SwaggerConfig {
     UiConfiguration uiConfig() {
     return UiConfigurationBuilder.builder()
     .operationsSorter(OperationsSorter.ALPHA)
-    .docExpansion(DocExpansion.LIST) // DocExpansion.LIST or DocExpansion.NONE or DocExpansion.FULL -> Exibe ou recolhe endpoints
-    .defaultModelsExpandDepth(-1) // Oculta Models
+    .docExpansion(DocExpansion.LIST) 
+    .defaultModelsExpandDepth(-1) 
     .build();
 
     }
