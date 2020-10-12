@@ -9,9 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="TB_CONTACT")
+@Table(name="TB_CONTACT")	
 public class Contact implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -38,6 +37,9 @@ public class Contact implements Serializable{
 		@Email(message = "O e-mail deve ser válido.")
 		private String email;
 		
-		@NotBlank
+		@NotBlank(message = "O telefone está inválido.")
+		@Size(max = 11)
 		private String phone;
+
+
 }
