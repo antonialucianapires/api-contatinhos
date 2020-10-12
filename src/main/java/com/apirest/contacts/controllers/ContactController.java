@@ -1,19 +1,16 @@
 package com.apirest.contacts.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.apirest.contacts.ContactNotFoundException;
+import com.apirest.contacts.service.ContactService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.apirest.contacts.models.Contact;
 import com.apirest.contacts.repository.ContactRepository;
@@ -27,55 +24,45 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins="*")
 public class ContactController {
 
-		private ContactRepository repository;
-	
-		ContactController(ContactRepository contactRepository) {
-			this.repository = contactRepository;
-		}
+		@Autowired
+		private ContactService service;
 		
 		@GetMapping("/contacts")
 		@ApiOperation(value="Listar todos os contatos")
-		public List<Contact> findAll() {
-			return repository.findAll();
+		public ResponseEntity<List<Contact>> findAll() {
+			return ResponseEntity.ok().body(service.getAll());
 		}
 		
 		@GetMapping("/contacts/{id}")
 		@ApiOperation(value="Obter um contato específico pelo ID")
 		public ResponseEntity<Contact> findById(@PathVariable long id) {
-			return repository.findById(id)
-					.map(record -> ResponseEntity.ok().body(record))
-					.orElse(ResponseEntity.notFound().build());
+			Optional<Contact> contact = service.getById(id);
+			if(contact.isPresent()) {
+				return  ResponseEntity.ok().body(contact.get());
+			} else {
+				return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
+			}
 		}
 		
 		@PostMapping("/contacts")
 		@ApiOperation(value="Criar um novo contato")
 		public Contact create(@Valid @RequestBody Contact contact) {
-			return repository.save(contact);
+			return service.save(contact);
 		}
 		
 		@PutMapping("/contacts/{id}")
 		@ApiOperation(value="Atualizar detalhes de um contato")
 		public ResponseEntity<Contact> update(@PathVariable("id") long id,
 										@RequestBody Contact contact) {
-			
-			return repository.findById(id)
-					.map(record -> {
-						record.setName(contact.getName());
-						record.setEmail(contact.getEmail());
-						record.setPhone(contact.getPhone());
-						Contact update = repository.save(record);
+		Contact update = service.update(id, contact);
 						return ResponseEntity.ok().body(update);
-					}).orElse(ResponseEntity.notFound().build());
 			
 		}
 		
 		@DeleteMapping("/contacts/{id}")
 		@ApiOperation(value="Remover um contato pelo ID")
 		public ResponseEntity<?> delete(@PathVariable long id) {
-			return repository.findById(id)
-					.map(record -> {
-						repository.deleteById(id);
-						return ResponseEntity.ok().build();
-					}).orElse(ResponseEntity.notFound().build());
+			service.deleteById(id);
+			return ResponseEntity.ok().build();
 		}
 }
